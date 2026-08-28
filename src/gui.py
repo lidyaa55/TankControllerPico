@@ -264,7 +264,7 @@ class GUI:
         self.led_label = tk.Label(
             right_frame,
             text="Board LED",
-            font=("Arial",12),
+            font=("Arial", 12),
             bg="darkgray",
             fg="black",
         )

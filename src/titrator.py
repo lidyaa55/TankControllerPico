@@ -7,6 +7,7 @@ The file for the Titrator class
 from src.devices.date_time import DateTime
 from src.devices.eeprom import EEPROM
 from src.devices.library import (
+    LED,
     Heater,
     Keypad,
     LiquidCrystal,
@@ -14,7 +15,6 @@ from src.devices.library import (
     SyringePump,
     TemperatureControl,
     TemperatureProbe,
-    LED,
 )
 from src.devices.ph_control import PHControl
 from src.devices.ph_probe_mock import PHProbe
