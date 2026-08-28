@@ -249,13 +249,13 @@ class GUI:
             bg="darkgray",
             highlightthickness=0,
         )
-        self.led_canvas.grid(row=0, column=0, padx=30, sticky=tk.E)
+        self.led_canvas.grid(row=0, column=0, padx=5, pady=10, sticky=tk.NE)
 
         self.led_circle = self.led_canvas.create_oval(
-            5,
-            5,
-            50,
-            50,
+            4,
+            4,
+            30,
+            30,
             fill="red",
             outline="black",
             width=3,
@@ -268,7 +268,7 @@ class GUI:
             bg="darkgray",
             fg="black",
         )
-        self.led_label.grid(row=0, column=1, padx=20, sticky=tk.W)
+        self.led_label.grid(row=0, column=1, padx=2, pady=10, sticky=tk.NW)
 
         # Start GUI update thread
         self.thread = threading.Thread(
