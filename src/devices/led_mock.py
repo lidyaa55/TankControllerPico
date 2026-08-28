@@ -21,4 +21,3 @@ class LED:
     def toggle(self):
         """Toggle the LED between on and off."""
         self.is_on = not self.is_on
-        

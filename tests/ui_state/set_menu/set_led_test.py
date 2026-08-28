@@ -26,4 +26,3 @@ def test_led_off():
     state.handle_key(Keypad.KEY_9)
 
     assert titrator.led.is_on is False
-    

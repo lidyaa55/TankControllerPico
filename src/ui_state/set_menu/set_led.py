@@ -49,4 +49,3 @@ class SetLED(UIState):
 
         if key == Keypad.KEY_D:
             self._set_next_state(self.previous_state, True)
-            
