@@ -17,6 +17,7 @@ if mock_config.MOCK_ENABLED:
     from src.devices.digital_mock import DigitalInOut
     from src.devices.heater_mock import Heater
     from src.devices.keypad_mock import Keypad
+    from src.devices.led_mock import LED
     from src.devices.liquid_crystal_mock import LiquidCrystal
     from src.devices.max31865_mock import MAX31865
     from src.devices.serial_mock import Serial

@@ -7,6 +7,7 @@ The file for the Titrator class
 from src.devices.date_time import DateTime
 from src.devices.eeprom import EEPROM
 from src.devices.library import (
+    LED,
     Heater,
     Keypad,
     LiquidCrystal,
@@ -63,6 +64,9 @@ class Titrator:
 
         # Initialize LCD
         self.lcd = LiquidCrystal()
+
+        # Initialize LED
+        self.led = LED()
 
         # Initialize Keypad
         self.keypad = Keypad()

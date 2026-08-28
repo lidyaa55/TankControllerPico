@@ -11,6 +11,7 @@ from src.ui_state.set_menu.set_google_mins import SetGoogleSheetInterval
 from src.ui_state.set_menu.set_kd import SetKD
 from src.ui_state.set_menu.set_ki import SetKI
 from src.ui_state.set_menu.set_kp import SetKP
+from src.ui_state.set_menu.set_led import SetLED
 from src.ui_state.set_menu.set_ph_calibration import PHCalibration
 from src.ui_state.set_menu.set_ph_calibration_clear import ResetPHCalibration
 from src.ui_state.set_menu.set_ph_sine_wave import SetPHSineWave
@@ -77,6 +78,7 @@ class MainMenu(UIState):
             "Set chill/heat",
             "Set Google mins",
             "Set KD",
+            "Set LED",
             "Set KI",
             "Set KP",
             "Set pH target",
@@ -114,6 +116,7 @@ class MainMenu(UIState):
             SetChillOrHeat,  # Set chill/heat
             SetGoogleSheetInterval,  # Set Google mins
             SetKD,  # Set KD
+            SetLED,  # Set LED
             SetKI,  # Set KI
             SetKP,  # Set KP
             SetPHTarget,  # Set pH target
