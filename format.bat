@@ -1,4 +1,4 @@
-@echo off 
+@echo off
 
 if not exist ".venv" (
     echo Creating virtual environment...

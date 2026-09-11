@@ -2,7 +2,7 @@
 The file to hold the Alkalinity Titrator's GUI class
 """
 
-# pylint: disable = too-many-locals, too-many-statements
+# pylint: disable = too-many-locals, too-many-statements, too-many-instance-attributes
 
 import threading
 import time
