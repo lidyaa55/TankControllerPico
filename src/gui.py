@@ -2,7 +2,7 @@
 The file to hold the Alkalinity Titrator's GUI class
 """
 
-# pylint: disable = too-many-locals, too-many-statements
+# pylint: disable = too-many-locals, too-many-statements, too-many-instance-attributes
 
 import threading
 import time
@@ -123,21 +123,18 @@ class GUI:
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("1"),
         ).grid(row=4, column=0, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="2",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("2"),
         ).grid(row=4, column=1, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="3",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("3"),
         ).grid(row=4, column=2, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="A",
@@ -151,25 +148,22 @@ class GUI:
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("4"),
         ).grid(row=5, column=0, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="5",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("5"),
         ).grid(row=5, column=1, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="6",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("6"),
         ).grid(row=5, column=2, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="B",
-            width=8,
+            width=BUTTON_WIDTH,
             command=lambda: self.button_press("B"),
         ).grid(row=5, column=3, sticky=STICKY)
 
@@ -179,21 +173,18 @@ class GUI:
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("7"),
         ).grid(row=6, column=0, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="8",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("8"),
         ).grid(row=6, column=1, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="9",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("9"),
         ).grid(row=6, column=2, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="C",
@@ -207,21 +198,18 @@ class GUI:
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("*"),
         ).grid(row=7, column=0, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="0",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("0"),
         ).grid(row=7, column=1, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="#",
             width=BUTTON_WIDTH,
             command=lambda: self.button_press("#"),
         ).grid(row=7, column=2, sticky=STICKY)
-
         tk.Button(
             buttonframe,
             text="D",
@@ -232,52 +220,101 @@ class GUI:
         buttonframe.grid(row=1, column=0, sticky=STICKY)
 
         # ---------------------------------------------------------
-        # RIGHT SIDE - BOARD LED
+        # RIGHT SIDE - BOARD LED AND HEATER/CHILLER
         # ---------------------------------------------------------
 
         right_frame = tk.Frame(self.root, bg="darkgray")
         right_frame.grid(row=0, column=1, sticky=STICKY)
 
-        right_frame.columnconfigure(0, weight=1)
-        right_frame.columnconfigure(1, weight=1)
-        right_frame.rowconfigure(0, weight=1)
+        # ---------------------------------------------------------
+        # BOARD LED
+        # ---------------------------------------------------------
+
+        led_frame = tk.Frame(right_frame, bg="darkgray")
+        led_frame.grid(row=0, column=0, sticky=tk.N, padx=5, pady=10)
 
         self.led_canvas = tk.Canvas(
-            right_frame,
-            width=80,
-            height=80,
-            bg="darkgray",
-            highlightthickness=0,
+            led_frame, width=40, height=40, bg="darkgray", highlightthickness=0
         )
-        self.led_canvas.grid(row=0, column=0, padx=5, pady=10, sticky=tk.NE)
+        self.led_canvas.grid(row=0, column=0)
 
         self.led_circle = self.led_canvas.create_oval(
-            4,
-            4,
-            30,
-            30,
-            fill="red",
-            outline="black",
-            width=3,
+            3, 3, 30, 30, fill="red", outline="black", width=3
         )
 
         self.led_label = tk.Label(
-            right_frame,
-            text="Board LED",
-            font=("Arial", 12),
-            bg="darkgray",
-            fg="black",
+            led_frame, text="Board LED", font=("Arial", 12), bg="darkgray", fg="black"
         )
-        self.led_label.grid(row=0, column=1, padx=2, pady=10, sticky=tk.NW)
+        self.led_label.grid(row=0, column=1, padx=5, sticky=tk.W)
+
+        # ---------------------------------------------------------
+        # HEATER / CHILLER SLIDING HIGHLIGHT BAR
+        # ---------------------------------------------------------
+
+        device_frame = tk.Frame(right_frame, bg="darkgray")
+        device_frame.grid(row=1, column=0, sticky=tk.N, padx=5, pady=10)
+
+        self.switch_canvas = tk.Canvas(
+            device_frame,
+            width=120,
+            height=40,
+            bg="darkgray",
+            highlightthickness=0,
+        )
+        self.switch_canvas.grid(row=0, column=0)
+
+        # Background bar
+        self.switch_canvas.create_rectangle(
+            5, 15, 115, 25, fill="#444444", outline="white", width=2
+        )
+
+        # Sliding highlight bar
+        self.highlight = self.switch_canvas.create_rectangle(
+            5,
+            15,
+            60,
+            25,  # default = CHILLER ON
+            fill="lightblue",
+            outline="white",
+            width=2,
+        )
+
+        # Labels
+        self.switch_canvas.create_text(
+            32, 32, text="CHILL", fill="white", font=("Arial", 9, "bold")
+        )
+        self.switch_canvas.create_text(
+            90, 32, text="HEAT", fill="white", font=("Arial", 9, "bold")
+        )
+
+        # Animation state
+        self.highlight_x = 5
+        self.highlight_target = 5
+        self.last_heater_state = None
 
         # Start GUI update thread
-        self.thread = threading.Thread(
-            target=self.update_gui,
-            daemon=True,
-        )
+        self.thread = threading.Thread(target=self.update_gui, daemon=True)
         self.thread.start()
 
         self.root.mainloop()
+
+    def animate_switch(self):
+        """Smooth sliding animation for heater/chiller highlight bar."""
+        speed = 2  # pixels per frame
+
+        if self.highlight_x < self.highlight_target:
+            self.highlight_x += speed
+        elif self.highlight_x > self.highlight_target:
+            self.highlight_x -= speed
+
+        # Update highlight bar position
+        self.switch_canvas.coords(
+            self.highlight, self.highlight_x, 15, self.highlight_x + 55, 25
+        )
+
+        # Continue animation until target reached
+        if abs(self.highlight_x - self.highlight_target) > 1:
+            self.root.after(10, self.animate_switch)
 
     def button_press(self, key):
         """
@@ -287,7 +324,7 @@ class GUI:
 
     def update_gui(self):
         """
-        The function to update the GUI LCD and LED
+        The function to update the GUI LCD, LED, and Heater/Chiller
         """
         while True:
             time.sleep(0.001)
@@ -309,13 +346,27 @@ class GUI:
                 anchor=self.titrator.lcd.get_style(4),
             )
 
+            # Update Board LED
             if self.titrator.led.is_on:
-                self.led_canvas.itemconfig(
-                    self.led_circle,
-                    fill="yellow",
-                )
+                self.led_canvas.itemconfig(self.led_circle, fill="yellow")
             else:
-                self.led_canvas.itemconfig(
-                    self.led_circle,
-                    fill="black",
-                )
+                self.led_canvas.itemconfig(self.led_circle, fill="black")
+
+            # ---------------------------------------------------------
+            # UPDATE HEATER / CHILLER SLIDING HIGHLIGHT BAR
+            # ---------------------------------------------------------
+
+            heater_on = self.titrator.thermal_control.get_heat(True)
+
+            # Only animate when state changes
+            if heater_on != self.last_heater_state:
+                if heater_on:
+                    self.highlight_target = 60
+                    self.switch_canvas.itemconfig(self.highlight, fill="orange")
+                else:
+                    self.highlight_target = 5
+                    self.switch_canvas.itemconfig(self.highlight, fill="lightblue")
+
+                self.animate_switch()
+
+            self.last_heater_state = heater_on
