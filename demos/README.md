@@ -12,18 +12,18 @@ MicroPython setup, wiring, drivers, and test scripts
 
 ---
 
-## 2. Using Raspberry Pi Pico in VS Code (MicroPython)
+## 2. Using Raspberry Pi Pico in Visual Studio Code (MicroPython)
 
 ### Steps
 
 1. Connect Pico via USB
-2. Open VS Code
+2. Open Visual Studio Code
 3. Press **Ctrl + Shift + P**
 4. Select **Pico: Configure Project**
 5. Choose the correct COM port
 6. Open REPL
 7. Upload your `.py` files to the Pico
-8. Run scripts directly from VS Code or REPL
+8. Run scripts directly from Visual Studio Code or REPL
 
 ---
 
@@ -71,8 +71,8 @@ Save as: **`uFT6336U.py`**
 ## 5. Test Code
 
 1. Run **`demo_setup.bat`** from the `demos` folder to download the driver files.
-2. Connect the Pico to VS Code and upload **`ili9341.py`** and **`uFT6336U.py`** to the Pico.
+2. Connect the Pico to Visual Studio Code and upload **`ili9341.py`** and **`uFT6336U.py`** to the Pico.
 3. To test the LCD, open **`shapes_demo.py`**, upload it to the Pico, and run the current file. The display should show colored lines, rectangles, polygons, circles, and ellipses.
-4. To test the touchscreen, open **`touch_demo.py`**, upload it to the Pico, and run the current file. Touch coordinates should appear in the VS Code REPL.
+4. To test the touchscreen, open **`touch_demo.py`**, upload it to the Pico, and run the current file. Touch coordinates should appear in the Visual Studio Code REPL.
 
 ---

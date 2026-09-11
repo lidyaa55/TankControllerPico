@@ -1,4 +1,5 @@
-'''uFT6336U demo (touch).'''
+"""uFT6336U demo (touch)."""
+
 import time
 
 import uFT6336U
